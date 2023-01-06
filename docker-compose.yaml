@@ -1,0 +1,50 @@
+# based on https://www.xfelix.com/2020/09/pihole-unbound-docker-setup-on-raspberry-pi/
+version: '3'
+
+networks:
+  dns_net:
+    driver: bridge
+    ipam:
+        config:
+        - subnet: 172.20.0.0/16
+
+services:
+  pihole:
+    container_name: pihole
+    hostname: pihole
+    image: pihole/pihole:latest
+    networks:
+      dns_net:
+        ipv4_address: 172.20.0.6
+    ports:
+    - "yy.yy.yy.yy:53:53/tcp"
+    - "yy.yy.yy.yy:53:53/udp"
+    # we can't just do '53:53/tcp' and '53:53/udp' because of libvirt's dnsmasq  
+    - "80:80/tcp"
+    - "443:443/tcp"
+    environment:
+    - 'TZ=America/New_York'
+    - 'WEBPASSWORD=xxxxxxxx
+    - 'DNS1=172.20.0.7#5053'
+    - 'DNS2=no'
+    - 'ServerIP=yy.yy.yy.yy'
+    volumes:
+    - '/root/docker/dns_net/pihole/etc-pihole/:/etc/pihole/'
+    - '/root/docker/dns_net/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+  unbound:
+    container_name: unbound
+    image: mvance/unbound:latest
+    networks:
+      dns_net:
+        ipv4_address: 172.20.0.7
+    volumes:
+    - /root/docker/dns_net/unbound/:/opt/unbound/etc/unbound/
+    ports:
+    - "5053:5053/tcp"
+    - "5053:5053/udp"
+    healthcheck:
+      disable: true
+    restart: unless-stopped
