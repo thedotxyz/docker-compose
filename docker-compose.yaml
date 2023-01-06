@@ -1,4 +1,3 @@
-# based on https://www.xfelix.com/2020/09/pihole-unbound-docker-setup-on-raspberry-pi/
 version: '3'
 
 networks:
@@ -29,8 +28,8 @@ services:
     - 'DNS2=no'
     #- 'ServerIP=yy.yy.yy.yy'
     volumes:
-    - '/root/docker_data/pihole/etc-pihole/:/etc/pihole/'
-    - '/root/docker_data/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    - '/root/docker_data/pihole-unbound/pihole/etc-pihole/:/etc/pihole/'
+    - '/root/docker_data/pihole-unbound/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -41,7 +40,7 @@ services:
       dns_net:
         ipv4_address: 172.20.0.7
     volumes:
-    - /root/docker_data/unbound/:/opt/unbound/etc/unbound/
+    - /root/docker_data/pihole-unbound/unbound/:/opt/unbound/etc/unbound/
     ports:
     - "5053:5053/tcp"
     - "5053:5053/udp"
