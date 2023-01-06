@@ -21,7 +21,17 @@ XX
 XX
 
 <h2>Prerequisites</h2>
-XX
+To run this in a home-lab scenario you've got to perform some prerequisite steps. This combination of services runs perfectly fine on a Raspberry Pi. Recommended steps to perform are:
+
+<ol>
+    <li>Install Raspbian / Raspberry Pi</li>
+    <li>Configure Automatic Updates</li>
+    <li>Configure Fail2Ban</li>
+    <li>Install Git</li>
+    <li>Install Docker</li>
+    <li>Configure Firewall</li>
+</ol>
+>It's best to enable the firewall (UFW) after installing and running Unbound & PiHole.
 
 <h2>Installing</h2>
 XX
