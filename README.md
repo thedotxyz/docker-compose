@@ -20,27 +20,93 @@ XX
 <h2>Details</h2>
 XX
 
-<h2>Prerequisites</h2>
+<h2>Server Prerequisites</h2>
 To run this in a home-lab scenario you've got to perform some prerequisite steps. This combination of services runs perfectly fine on a Raspberry Pi. Recommended steps to perform are:
 
 <ol>
     <li>Install Raspbian / Raspberry Pi</li>
+    <li>Make sure you're server has got a static IP address</li>
     <li>Configure Automatic Updates</li>
     <li>Configure Fail2Ban</li>
     <li>Install Git</li>
     <li>Install Docker</li>
+    <li>Install Docker-Compose</li>
     <li>Configure Firewall</li>
 </ol>
+
 >It's best to enable the firewall (UFW) after installing and running Unbound & PiHole.
 
+<h2>File and folder structere Prerequisites</h2>
+Login on the server with the account you will use to install services (sudo permissions required). Make the folder structure for the docker-files.
+
+```console
+mkdir ~/docker_data/pihole-unbound
+mkdir ~/docker_data/pihole-unbound/etc-dnsmasq.d
+mkdir ~/docker_data/pihole-unbound/etc-pihole
+mkdir ~/docker_data/pihole-unbound/unbound
+```
+
 <h2>Installing</h2>
-XX
+After installing Git you clone this repository to your local server by:
+
+```console
+git clone https://github.com/thedotxyz/pihole-unbound
+```
+
+Next edit the docker-compose file to modify specific settings to your liking. At least change the 'Webpassword' for pihole or any of the other variables like ip, ports or volumes.
+
+```console
+sudo nano <PATH>\docker-compose.yaml
+```
+Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
+
+<h2>Running the containers</h2>
+
+Let’s start unbound container first:
+```console
+sudo docker-compose up -d unbound
+```
+
+To get access to testing utilities (nslookup and dig) install dnsutils:
+```console
+sudo apt-get install dnsutils
+```
+
+Test if unbound is working as expected:
+```console
+dig www.google.com @172.20.0.7 -p 5053
+dig www.google.com @127.0.0.1 -p 5053
+```
+If all return normal results then unbound is up running.</br>
+
+Then start pihole container.
+
+```console
+sudo docker-compose up -d pihole
+```
 
 <h2>Governance</h2>
+After succesfully starting both of the containers we can try to access the Pi-hole management interface to configure the desired Pi-hole blocklist by accessing http://your-Raspberry-pi-ip/admin/index.php.
+
+
+
+<h2>Populate Pi-hole</h2>
 XX
 
 <h2>Updating</h2>
-XX
+Because we have seperated the configuration and data files for Unbound en Pi-hole in our volume configuration, updating docker containers is pretty easy. We perform this by downloading the new container versions, stopping the current containers and removing them and then create and start new updated containers. This can be done by:
+
+```console
+sudo docker pull pihole/pihole:latest
+sudo docker pull mvance/unbound-rpi:latest
+sudo docker stop pihole
+sudo docker stop unbound
+sudo docker rm pihole
+sudo docker rm unbound
+sudo docker-compose up -d unbound
+sudo docker-compose up -d pihole
+```
+
 <h2>Sources</h2>
 
 https://nlnetlabs.nl/projects/unbound/about/
