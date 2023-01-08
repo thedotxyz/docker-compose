@@ -160,7 +160,7 @@ git clone https://github.com/thedotxyz/pihole-unbound
 Next edit the docker-compose file to modify specific settings to your liking. At least change the 'Webpassword' for pihole or any of the other variables like ip, ports or volumes.
 
 ```console
-sudo nano ~\pihole-unbound\docker-compose.yaml
+nano ~/pihole-unbound/docker-compose.yaml
 ```
 Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 
