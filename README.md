@@ -56,8 +56,8 @@ The next steps will cover the creation of the two configuraiton files. I've incl
 At first we create and edit the <code>/docker_data/pihole-unbound/unbound/a-records.conf</code> file. This file is mandatory as we mapped the volume of the unbound docker image to another location. 
 
 ```console
-touch /docker_data/pihole-unbound/unbound/a-records.conf
-nano /docker_data/pihole-unbound/unbound/a-records.conf
+touch ~/docker_data/pihole-unbound/unbound/a-records.conf
+nano ~/docker_data/pihole-unbound/unbound/a-records.conf
 ```
 You can leave it empty or put your local custom records if you need. Below is an example of the syntax for local rcords.
 
