@@ -60,7 +60,7 @@ nano /docker_data/pihole-unbound/unbound/a-records.conf
 ```
 You can leave it empty or put your local custom records if you need. Below is an example of the syntax for local rcords.
 
-```console
+```conf
 # A Record
 #local-data: "somecomputer.local. A 192.168.1.1"
  
@@ -75,10 +75,70 @@ Next we can create and modify the main configuration of Unbound. Unbound will au
 touch /docker_data/pihole-unbound/unbound/unbound.conf
 nano /docker_data/pihole-unbound/unbound/unbound.conf
 ```
-XXX
+If you want to define the config file yourself you can use the next example. Make modifications if needed.
 
-```console
-
+```conf
+server:
+# If no logfile is specified, syslog is used
+# logfile: "/var/log/unbound/unbound.log"
+verbosity: 0
+ 
+access-control: 172.16.0.0/12 allow
+access-control: 127.0.0.0/8 allow
+access-control: 10.0.0.0/8 allow
+access-control: 192.168.0.0/16 allow
+interface: 0.0.0.0
+port: 5053
+do-ip4: yes
+do-udp: yes
+do-tcp: yes
+ 
+# May be set to yes if you have IPv6 connectivity
+do-ip6: no
+ 
+# You want to leave this to no unless you have *native* IPv6. With 6to4 and
+# Terredo tunnels your web browser should favor IPv4 for the same reasons
+prefer-ip6: no
+ 
+# Use this only when you downloaded the list of primary root servers!
+# If you use the default dns-root-data package, unbound will find it automatically
+# I have to quote out this root-hints, as it causing container endless restarting for a new installation. You can add root-hints back after first run. 
+#root-hints: “/opt/unbound/etc/unbound/root.hints”
+ 
+# Trust glue only if it is within the server's authority
+harden-glue: yes
+ 
+# Require DNSSEC data for trust-anchored zones, if such data is absent, the zone becomes BOGUS
+harden-dnssec-stripped: yes
+ 
+# Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
+# see https://discourse.pi-hole.net/t/unbound-stubby-or-dnscrypt-proxy/9378 for further details
+use-caps-for-id: no
+ 
+# Reduce EDNS reassembly buffer size.
+# Suggested by the unbound man page to reduce fragmentation reassembly problems
+edns-buffer-size: 1472
+ 
+# Perform prefetching of close to expired message cache entries
+# This only applies to domains that have been frequently queried
+prefetch: yes
+ 
+# One thread should be sufficient, can be increased on beefy machines. In reality for most users running on small networks or on a single machine, it should be unnecessary to seek performance enhancement by increasing num-threads above 1.
+num-threads: 1
+ 
+# Ensure kernel buffer is large enough to not lose messages in traffic spikes
+so-rcvbuf: 1m
+ 
+# Ensure privacy of local IP ranges
+private-address: 192.168.0.0/16
+private-address: 169.254.0.0/16
+private-address: 172.16.0.0/12
+private-address: 10.0.0.0/8
+private-address: fd00::/8
+private-address: fe80::/10
+ 
+#plex
+private-domain: plex.direct
 ```
 
 <h3>DNS Root Hints</h3>
