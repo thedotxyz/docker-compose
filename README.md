@@ -168,6 +168,7 @@ Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 
 Let’s start unbound container first:
 ```console
+cd ~/docker_data/pihole-unbound/unbound
 sudo docker-compose up -d unbound
 ```
 
