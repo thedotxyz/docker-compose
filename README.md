@@ -67,6 +67,7 @@ You can leave it empty or put your local custom records if you need. Below is an
 # PTR Record
 #local-data-ptr: "192.168.1.1 somecomputer.local."
 ```
+Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 
 <h3>Main configuration of Unbound (unbound.conf)</h3>
 Next we can create and modify the main configuration of Unbound. Unbound will automatically generate a default one if you not create it. To create and edit the configuration file:
@@ -135,13 +136,17 @@ private-address: 169.254.0.0/16
 private-address: 172.16.0.0/12
 private-address: 10.0.0.0/8
 private-address: fd00::/8
-private-address: fe80::/10
- 
-#plex
-private-domain: plex.direct
+private-address: fe80::/10 
 ```
+Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 
 <h3>DNS Root Hints</h3>
+If you don't want to use the default DNS 'root hints' in the unbound container (otherwise you should have unquoted the 'root-hints' part of the config file'), you should download the most recent '<code>root.hints</code>' file to your unbound data folder (<code>/docker_data/pihole-unbound/unbound</code>). You do this by:
+
+```console
+cd ~/docker_data/pihole-unbound/unbound
+wget -O root.hints https://www.internic.net/domain/named.root
+```
 
 <h2>Installing</h2>
 After installing Git you clone this repository to your local server by:
@@ -184,8 +189,6 @@ sudo docker-compose up -d pihole
 
 <h2>Governance</h2>
 After succesfully starting both of the containers we can try to access the Pi-hole management interface to configure the desired Pi-hole blocklist by accessing http://your-Raspberry-pi-ip/admin/index.php.
-
-
 
 <h2>Populate Pi-hole</h2>
 XX
