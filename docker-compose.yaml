@@ -29,7 +29,7 @@ services:
     #- 'ServerIP=yy.yy.yy.yy'
     volumes:
     - '~/docker_data/pihole-unbound/pihole/etc-pihole/:/etc/pihole/'
-    - '~/root/docker_data/pihole-unbound/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    - '~/docker_data/pihole-unbound/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -40,7 +40,7 @@ services:
       dns_net:
         ipv4_address: 172.20.0.7
     volumes:
-    - ~/docker_data/pihole-unbound/unbound/:/opt/unbound/etc/unbound/
+    - '~/docker_data/pihole-unbound/unbound/:/opt/unbound/etc/unbound/'
     ports:
     - "5053:5053/tcp"
     - "5053:5053/udp"
