@@ -41,13 +41,47 @@ Login on the server with the account you will use to install services (sudo perm
 
 ```console
 mkdir ~/docker_data/pihole-unbound
-mkdir ~/docker_data/pihole-unbound/etc-dnsmasq.d
-mkdir ~/docker_data/pihole-unbound/etc-pihole
+mkdir ~/docker_data/pihole-unbound/pihole
+mkdir ~/docker_data/pihole-unbound/pihole/etc-dnsmasq.d
+mkdir ~/docker_data/pihole-unbound/pihole/etc-pihole
 mkdir ~/docker_data/pihole-unbound/unbound
 ```
 
 <h2>Unbound Prerequisites</h2>
-XX
+To prepare the configuration of unbound we start with creating two config files (<code>a-records.conf</code> (mandatory), <code>unbound.conf</code>) (optional) and downloading DNS <code>root.hints</code> from Internic.</br>
+The next steps will cover the creation of the two configuraiton files. I've included the two seperate files and directory structure in this Github repo.
+
+<h3>Configuration of local DNS records</h3>
+At first we create and edit the <code>/docker_data/pihole-unbound/unbound/a-records.conf</code> file. This file is mandatory as we mapped the volume of the unbound docker image to another location. 
+
+```console
+touch /docker_data/pihole-unbound/unbound/a-records.conf
+nano /docker_data/pihole-unbound/unbound/a-records.conf
+```
+You can leave it empty or put your local custom records if you need. Below is an example of the syntax for local rcords.
+
+```console
+# A Record
+#local-data: "somecomputer.local. A 192.168.1.1"
+ 
+# PTR Record
+#local-data-ptr: "192.168.1.1 somecomputer.local."
+```
+
+<h3>Main configuration of Unbound (unbound.conf)</h3>
+Next we can create and modify the main configuration of Unbound. Unbound will automatically generate a default one if you not create it. To create and edit the configuration file:
+
+```console
+touch /docker_data/pihole-unbound/unbound/unbound.conf
+nano /docker_data/pihole-unbound/unbound/unbound.conf
+```
+XXX
+
+```console
+
+```
+
+<h3>DNS Root Hints</h3>
 
 <h2>Installing</h2>
 After installing Git you clone this repository to your local server by:
