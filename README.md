@@ -147,6 +147,7 @@ If you don't want to use the default DNS 'root hints' in the unbound container (
 ```console
 cd ~/docker_data/pihole-unbound/unbound
 wget -O root.hints https://www.internic.net/domain/named.root
+cd
 ```
 
 <h2>Installing</h2>
