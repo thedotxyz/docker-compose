@@ -145,7 +145,7 @@ Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 If you don't want to use the default DNS 'root hints' in the unbound container (otherwise you should have unquoted the 'root-hints' part of the config file'), you should download the most recent '<code>root.hints</code>' file to your unbound data folder (<code>/docker_data/pihole-unbound/unbound</code>). You do this by:
 
 ```console
-cd ~/docker_data/pihole-unbound/unbound
+cd ~/pihole-unbound
 wget -O root.hints https://www.internic.net/domain/named.root
 cd
 ```
