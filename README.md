@@ -40,6 +40,7 @@ To run this in a home-lab scenario you've got to perform some prerequisite steps
 Login on the server with the account you will use to install services (sudo permissions required). Make the folder structure for the docker-files.
 
 ```console
+mkdir ~/docker_data
 mkdir ~/docker_data/pihole-unbound
 mkdir ~/docker_data/pihole-unbound/pihole
 mkdir ~/docker_data/pihole-unbound/pihole/etc-dnsmasq.d
