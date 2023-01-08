@@ -74,8 +74,8 @@ Save and exit with <code>CTRL+O</code>, <code>CTRL+X</code>.
 Next we can create and modify the main configuration of Unbound. Unbound will automatically generate a default one if you not create it. To create and edit the configuration file:
 
 ```console
-touch /docker_data/pihole-unbound/unbound/unbound.conf
-nano /docker_data/pihole-unbound/unbound/unbound.conf
+touch ~/docker_data/pihole-unbound/unbound/unbound.conf
+nano ~/docker_data/pihole-unbound/unbound/unbound.conf
 ```
 If you want to define the config file yourself you can use the next example. Make modifications if needed.
 
